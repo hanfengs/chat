@@ -10,13 +10,28 @@
 
 @interface ViewController ()
 
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
+
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    /*
+     http://47.95.38.15/gm/login.html
+     http://47.95.38.15/gm/login.html
+     
+     http://maxen.quxueabc.com
+     */
+    NSURL *url = [NSURL URLWithString:@"http://47.95.38.15/gm/login.html"];
+//    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+    
+    //加载请求的时候忽略缓存
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30.0];
+    [self.webView loadRequest:urlRequest];
+
 }
 
 
