@@ -29,6 +29,7 @@
 		6AF15E7B200451D200445693 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AF15E7A200451D200445693 /* libz.tbd */; };
 		6AF15E7D200451F200445693 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AF15E7C200451ED00445693 /* UserNotifications.framework */; };
 		6AF15E7F200451FE00445693 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AF15E7E200451FE00445693 /* libresolv.tbd */; };
+		6AF15F7E2010A36D00445693 /* NSString+URLParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AF15F7C2010A36D00445693 /* NSString+URLParam.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,8 @@
 		6AF15E7C200451ED00445693 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		6AF15E7E200451FE00445693 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		6AF15E802004522400445693 /* accountManger.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = accountManger.entitlements; sourceTree = "<group>"; };
+		6AF15F7C2010A36D00445693 /* NSString+URLParam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLParam.m"; sourceTree = "<group>"; };
+		6AF15F7D2010A36D00445693 /* NSString+URLParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLParam.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				6AF15E802004522400445693 /* accountManger.entitlements */,
+				6AF15F7B2010A36D00445693 /* Common */,
 				6AF15E602004513D00445693 /* Lib */,
 				6A097A1A1FCFE54C0071AE65 /* AppDelegate.h */,
 				6A097A1B1FCFE54C0071AE65 /* AppDelegate.m */,
@@ -208,6 +212,15 @@
 				6AF15E6A2004515E00445693 /* CFNetwork.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6AF15F7B2010A36D00445693 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				6AF15F7C2010A36D00445693 /* NSString+URLParam.m */,
+				6AF15F7D2010A36D00445693 /* NSString+URLParam.h */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -349,6 +362,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A097A1F1FCFE54C0071AE65 /* ViewController.m in Sources */,
+				6AF15F7E2010A36D00445693 /* NSString+URLParam.m in Sources */,
 				6A097A2A1FCFE54C0071AE65 /* main.m in Sources */,
 				6A097A1C1FCFE54C0071AE65 /* AppDelegate.m in Sources */,
 			);
