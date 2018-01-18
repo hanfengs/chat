@@ -13,7 +13,7 @@
 #import <UserNotifications/UserNotifications.h>
 #endif
 
-#define AppKey        @"e63bb58f7d16b21c08da1645"
+#define AppKey        @"ac03b4b30a2eeb784ec6586d"
 #define Channel       @"Firim"
 #define IsProduction  1
 #define AdvertisingId @"advertisingId"
@@ -54,6 +54,15 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
     /// Required - 注册 DeviceToken
     [JPUSHService registerDeviceToken:deviceToken];
+    
+//    NSString *str  =[[NSString alloc] initWithData:deviceToken encoding:NSUTF8StringEncoding];
+    
+    NSString *str = [[[[deviceToken description] stringByReplacingOccurrencesOfString:@"<"withString:@""]
+                                     
+                                     stringByReplacingOccurrencesOfString:@">" withString:@""]
+                                    
+                                    stringByReplacingOccurrencesOfString:@" " withString:@""];
+    self.deviceToken = str;
 }
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     //Optional

@@ -8,6 +8,10 @@
 
 #import "ViewController.h"
 #import "JPUSHService.h"
+#import <JavaScriptCore/JavaScriptCore.h>
+#import "AppDelegate.h"
+
+#define ApplicationDelegate ((AppDelegate *)[UIApplication sharedApplication].delegate)
 
 @interface ViewController ()<UIWebViewDelegate>
 
@@ -90,10 +94,19 @@
             NSLog(@"isResCode====%ld", (long)iResCode);
             
         } seq:0];
-        
     }
+
     
+    JSContext *context = [self.webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
     
+//    NSString *textJS = @"showAlert('这里是JS中alert弹出的message')";
+    
+    NSString *deviceId = ApplicationDelegate.deviceToken;
+    NSString *registrationId = [JPUSHService registrationID];
+    
+    NSString *textJS = [NSString stringWithFormat:@"deviceInit('deviceId=%@&registrationId=%@')", deviceId, registrationId];
+
+    [context evaluateScript:textJS];
 }
 
 @end
