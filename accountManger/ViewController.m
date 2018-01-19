@@ -24,6 +24,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(haveDeviceToken) name:@"deviceTokenStr" object:nil];
+    
     self.webView.delegate = self;
     /*
      http://47.95.38.15/gm/login.html
@@ -36,20 +39,27 @@
     //加载请求的时候忽略缓存
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30.0];
     [self.webView loadRequest:urlRequest];
-
 }
+
+//- (void)webViewDidFinishLoad:(UIWebView *)webView{
+//
+//    NSString *deviceId = ApplicationDelegate.deviceToken;
+//    NSString *registrationId = [JPUSHService registrationID];
+//
+//    NSString *textJS = [NSString stringWithFormat:@"deviceInit('deviceId=%@&registrationId=%@');", deviceId, registrationId];
+//    [self.webView stringByEvaluatingJavaScriptFromString:textJS];
+//    //@"deviceInit(\"参数\");"
+//}
 
 //JS调用OC的方法
 -(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     
     NSURL *url = request.URL;
-//    NSString *scheme = url.scheme;
+    NSString *scheme = url.scheme;
 //    NSString *host = url.host;
 //    NSArray *paths = url.pathComponents;
 //    NSString *param1 = paths[1];
 //    NSString *param2 = paths[2];
-    
-    
     
     //"http://47.95.38.15/gm/index.html?loginName=admin"
     
@@ -64,17 +74,19 @@
         
         if ([parametersString containsString:@"&"]) {//说明有多个参数，不是我们需要的
             
-            
         }else{//只有一个参数
             NSArray *pairComponents = [parametersString componentsSeparatedByString:@"="];
             if (pairComponents.count == 2) {
                 NSString *key = [pairComponents.firstObject stringByRemovingPercentEncoding];
                 NSString *value = [pairComponents.lastObject stringByRemovingPercentEncoding];
                 
+                [self haveDeviceToken];
+                
                 NSString *sel = [key stringByAppendingString:@":"];
                 SEL selector = NSSelectorFromString(sel);
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
                 [self performSelector:selector withObject:value];
+                
             }
         }
     }
@@ -88,6 +100,16 @@
 //        [self performSelector:selector withObject:param2];
 //
 //    }
+    
+    //html中，没有Chat，并不会执行此段代码
+    if ([scheme isEqualToString:@"chat"]) {
+        NSString *deviceId = ApplicationDelegate.deviceToken;
+        NSString *registrationId = [JPUSHService registrationID];
+        
+        NSString *textJS = [NSString stringWithFormat:@"deviceInit('deviceId=%@&registrationId=%@');", deviceId, registrationId];
+        [self.webView stringByEvaluatingJavaScriptFromString:textJS];
+    }
+    
     return YES;
 }
 
@@ -104,16 +126,16 @@
         } seq:0];
     }
 
+    //JavaScriptCore的方式，
 //    JSContext *context = [self.webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
-    
 //    NSString *textJS = @"showAlert('这里是JS中alert弹出的message')";
     
-    NSString *deviceId = ApplicationDelegate.deviceToken;
-    NSString *registrationId = [JPUSHService registrationID];
-    
-    NSString *textJS = [NSString stringWithFormat:@"deviceInit('deviceId=%@&registrationId=%@');", deviceId, registrationId];
-    
-    [self.webView stringByEvaluatingJavaScriptFromString:textJS];
+//    NSString *deviceId = ApplicationDelegate.deviceToken;
+//    NSString *registrationId = [JPUSHService registrationID];
+//
+//    NSString *textJS = [NSString stringWithFormat:@"deviceInit('deviceId=%@&registrationId=%@');", deviceId, registrationId];
+//
+//    [self.webView stringByEvaluatingJavaScriptFromString:textJS];
     
     
     /*
@@ -135,6 +157,16 @@
      */
     
 //    [context evaluateScript:textJS];
+}
+
+- (void)haveDeviceToken{
+    
+    NSString *deviceId = ApplicationDelegate.deviceToken;
+    NSString *registrationId = [JPUSHService registrationID];
+
+    NSString *textJS = [NSString stringWithFormat:@"deviceInit('deviceId=%@&registrationId=%@');", deviceId, registrationId];
+
+    [self.webView stringByEvaluatingJavaScriptFromString:textJS];
 }
 
 @end

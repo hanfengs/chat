@@ -63,6 +63,8 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
                                     
                                     stringByReplacingOccurrencesOfString:@" " withString:@""];
     self.deviceToken = str;
+    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"deviceTokenStr" object:nil];
 }
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     //Optional
