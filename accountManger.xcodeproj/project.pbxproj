@@ -15,6 +15,8 @@
 		6A097A2A1FCFE54C0071AE65 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A097A291FCFE54C0071AE65 /* main.m */; };
 		6A097A341FCFE54C0071AE65 /* accountMangerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A097A331FCFE54C0071AE65 /* accountMangerTests.m */; };
 		6A097A3F1FCFE54C0071AE65 /* accountMangerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A097A3E1FCFE54C0071AE65 /* accountMangerUITests.m */; };
+		6A8CB2EA20202B12005B5378 /* IDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A8CB2E820202B12005B5378 /* IDViewController.m */; };
+		6A8CB2EB20202B12005B5378 /* IDViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A8CB2E920202B12005B5378 /* IDViewController.xib */; };
 		6AF15E662004513D00445693 /* jpush-ios-3.0.7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AF15E632004513D00445693 /* jpush-ios-3.0.7.a */; };
 		6AF15E672004513D00445693 /* jcore-ios-1.1.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AF15E642004513D00445693 /* jcore-ios-1.1.6.a */; };
 		6AF15E682004513D00445693 /* jpush-extension-ios-1.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AF15E652004513D00445693 /* jpush-extension-ios-1.0.0.a */; };
@@ -66,6 +68,9 @@
 		6A097A3A1FCFE54C0071AE65 /* accountMangerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = accountMangerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A097A3E1FCFE54C0071AE65 /* accountMangerUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = accountMangerUITests.m; sourceTree = "<group>"; };
 		6A097A401FCFE54C0071AE65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6A8CB2E720202B12005B5378 /* IDViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDViewController.h; sourceTree = "<group>"; };
+		6A8CB2E820202B12005B5378 /* IDViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IDViewController.m; sourceTree = "<group>"; };
+		6A8CB2E920202B12005B5378 /* IDViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IDViewController.xib; sourceTree = "<group>"; };
 		6AF15E612004513D00445693 /* JPushNotificationExtensionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPushNotificationExtensionService.h; sourceTree = "<group>"; };
 		6AF15E622004513D00445693 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
 		6AF15E632004513D00445693 /* jpush-ios-3.0.7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-3.0.7.a"; sourceTree = "<group>"; };
@@ -157,6 +162,9 @@
 				6A097A1B1FCFE54C0071AE65 /* AppDelegate.m */,
 				6A097A1D1FCFE54C0071AE65 /* ViewController.h */,
 				6A097A1E1FCFE54C0071AE65 /* ViewController.m */,
+				6A8CB2E720202B12005B5378 /* IDViewController.h */,
+				6A8CB2E820202B12005B5378 /* IDViewController.m */,
+				6A8CB2E920202B12005B5378 /* IDViewController.xib */,
 				6A097A201FCFE54C0071AE65 /* Main.storyboard */,
 				6A097A231FCFE54C0071AE65 /* Assets.xcassets */,
 				6A097A251FCFE54C0071AE65 /* LaunchScreen.storyboard */,
@@ -337,6 +345,7 @@
 				6A097A271FCFE54C0071AE65 /* LaunchScreen.storyboard in Resources */,
 				6A097A241FCFE54C0071AE65 /* Assets.xcassets in Resources */,
 				6A097A221FCFE54C0071AE65 /* Main.storyboard in Resources */,
+				6A8CB2EB20202B12005B5378 /* IDViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,6 +374,7 @@
 				6AF15F7E2010A36D00445693 /* NSString+URLParam.m in Sources */,
 				6A097A2A1FCFE54C0071AE65 /* main.m in Sources */,
 				6A097A1C1FCFE54C0071AE65 /* AppDelegate.m in Sources */,
+				6A8CB2EA20202B12005B5378 /* IDViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

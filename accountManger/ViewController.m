@@ -11,6 +11,7 @@
 #import <JavaScriptCore/JavaScriptCore.h>
 #import "AppDelegate.h"
 #import "NSString+URLParam.h"
+#import "IDViewController.h"
 
 #define ApplicationDelegate ((AppDelegate *)[UIApplication sharedApplication].delegate)
 
@@ -18,9 +19,13 @@
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 
+@property (nonatomic, strong) NSDictionary *jsDict;
+
 @end
 
-@implementation ViewController
+@implementation ViewController{
+    NSDictionary *_dic;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -56,39 +61,41 @@
     
     NSURL *url = request.URL;
     NSString *scheme = url.scheme;
+    
 //    NSString *host = url.host;
 //    NSArray *paths = url.pathComponents;
 //    NSString *param1 = paths[1];
 //    NSString *param2 = paths[2];
     
-    //"http://47.95.38.15/gm/index.html?loginName=admin"
+    //"http://47.95.38.15/gm/index.html?loginName=admin&userId=1"
     
     NSString *urlStr = url.absoluteString;
     NSRange range =  [urlStr  rangeOfString:@"?"];
     if (range.location != NSNotFound) {
-        
+       
         NSDictionary *dict = [urlStr getURLParameters];
         NSLog(@"=====%@", dict);
-        
-        NSString *parametersString = [urlStr substringFromIndex:range.location + 1];
-        
-        if ([parametersString containsString:@"&"]) {//说明有多个参数，不是我们需要的
-            
-        }else{//只有一个参数
-            NSArray *pairComponents = [parametersString componentsSeparatedByString:@"="];
-            if (pairComponents.count == 2) {
-                NSString *key = [pairComponents.firstObject stringByRemovingPercentEncoding];
-                NSString *value = [pairComponents.lastObject stringByRemovingPercentEncoding];
-                
-                [self haveDeviceToken];
-                
-                NSString *sel = [key stringByAppendingString:@":"];
-                SEL selector = NSSelectorFromString(sel);
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-                [self performSelector:selector withObject:value];
-                
-            }
-        }
+        self.jsDict = dict;
+
+//        NSString *parametersString = [urlStr substringFromIndex:range.location + 1];
+//
+//        if ([parametersString containsString:@"&"]) {//说明有多个参数，不是我们需要的
+//
+//        }else{//只有一个参数
+//            NSArray *pairComponents = [parametersString componentsSeparatedByString:@"="];
+//            if (pairComponents.count == 2) {
+//                NSString *key = [pairComponents.firstObject stringByRemovingPercentEncoding];
+//                NSString *value = [pairComponents.lastObject stringByRemovingPercentEncoding];
+
+////                [self haveDeviceToken];
+
+//                NSString *sel = [key stringByAppendingString:@":"];
+//                SEL selector = NSSelectorFromString(sel);
+//#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+//                [self performSelector:selector withObject:value];
+//
+//            }
+//        }
     }
     
 //    if([scheme isEqualToString:@"chat"]){
@@ -111,6 +118,15 @@
     }
     
     return YES;
+}
+
+- (void)setJsDict:(NSDictionary *)jsDict{
+    _jsDict = jsDict;
+    
+
+    NSString *userID = [jsDict objectForKey:@"userId"];
+    NSString *alias = [jsDict objectForKey:@"loginName"];
+    [self postUserId:userID withAlias:alias];
 }
 
 -(void)loginName:(NSString *)string{
@@ -159,14 +175,66 @@
 //    [context evaluateScript:textJS];
 }
 
-- (void)haveDeviceToken{
+//- (void)haveDeviceToken{
+//
+//    NSString *deviceId = ApplicationDelegate.deviceToken;
+//    NSString *registrationId = [JPUSHService registrationID];
+//
+//    NSString *textJS = [NSString stringWithFormat:@"deviceInit('deviceId=%@&registrationId=%@');", deviceId, registrationId];
+//
+//    [self.webView stringByEvaluatingJavaScriptFromString:textJS];
+//}
+
+
+#pragma mark- 原生POST
+
+- (void)postUserId:(NSString *)userId withAlias:(NSString *)alias{
     
     NSString *deviceId = ApplicationDelegate.deviceToken;
     NSString *registrationId = [JPUSHService registrationID];
+    
+    NSString *urlstr = @"http://101.132.152.101/get-api/push/device/init?";
+    NSString *args = [NSString stringWithFormat:@"userId=%@&deviceId=%@&pushRegistrationId=%@&alias=%@",userId, deviceId, registrationId, alias];
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", urlstr, args]];
+    // 2.创建一个网络请求，分别设置请求方法、请求参数
+    NSMutableURLRequest *request =[NSMutableURLRequest requestWithURL:url];
+    
+    // 3.获得会话对象
+    NSURLSession *session = [NSURLSession sharedSession];
+    // 4.根据会话对象，创建一个Task任务
+    NSURLSessionDataTask *sessionDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 
-    NSString *textJS = [NSString stringWithFormat:@"deviceInit('deviceId=%@&registrationId=%@');", deviceId, registrationId];
-
-    [self.webView stringByEvaluatingJavaScriptFromString:textJS];
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingMutableLeaves) error:nil];
+        NSLog(@"====dict===%@", dict);
+        _dic = @{@"deviceID": deviceId, @"registerID":registrationId, @"result":dict};
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            UIButton *button = [[UIButton alloc] init];
+            [button setTitle:@"ID" forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+            [button addTarget:self action:@selector(IDVC) forControlEvents:UIControlEventTouchUpInside];
+            
+            button.frame = CGRectMake(self.view.bounds.size.width - 75, self.view.bounds.size.height - 60, 75, 60);
+            [self.view addSubview:button];
+            
+        });
+        
+        
+    }];
+    //5.最后一步，执行任务，(resume也是继续执行)。
+    [sessionDataTask resume];
 }
 
+- (void)IDVC{
+    
+    IDViewController *vc = [[IDViewController alloc] init];
+    
+    [self presentViewController:vc animated:YES completion:^{
+        
+        vc.dict = _dic;
+    }];
+
+}
 @end
