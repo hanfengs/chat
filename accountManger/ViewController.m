@@ -123,9 +123,9 @@
 - (void)setJsDict:(NSDictionary *)jsDict{
     _jsDict = jsDict;
     
-
     NSString *userID = [jsDict objectForKey:@"userId"];
     NSString *alias = [jsDict objectForKey:@"loginName"];
+    
     [self postUserId:userID withAlias:alias];
 }
 
@@ -152,7 +152,6 @@
 //    NSString *textJS = [NSString stringWithFormat:@"deviceInit('deviceId=%@&registrationId=%@');", deviceId, registrationId];
 //
 //    [self.webView stringByEvaluatingJavaScriptFromString:textJS];
-    
     
     /*
      1;原生才能拿到 deviceID 和 registerID
@@ -185,9 +184,7 @@
 //    [self.webView stringByEvaluatingJavaScriptFromString:textJS];
 //}
 
-
 #pragma mark- 原生POST
-
 - (void)postUserId:(NSString *)userId withAlias:(NSString *)alias{
     
     NSString *deviceId = ApplicationDelegate.deviceToken;
@@ -197,12 +194,11 @@
     NSString *args = [NSString stringWithFormat:@"userId=%@&deviceId=%@&pushRegistrationId=%@&alias=%@",userId, deviceId, registrationId, alias];
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", urlstr, args]];
-    // 2.创建一个网络请求，分别设置请求方法、请求参数
+    
     NSMutableURLRequest *request =[NSMutableURLRequest requestWithURL:url];
     
-    // 3.获得会话对象
     NSURLSession *session = [NSURLSession sharedSession];
-    // 4.根据会话对象，创建一个Task任务
+    
     NSURLSessionDataTask *sessionDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingMutableLeaves) error:nil];
@@ -220,10 +216,8 @@
             [self.view addSubview:button];
             
         });
-        
-        
     }];
-    //5.最后一步，执行任务，(resume也是继续执行)。
+
     [sessionDataTask resume];
 }
 
@@ -235,6 +229,5 @@
         
         vc.dict = _dic;
     }];
-
 }
 @end
