@@ -203,7 +203,10 @@
 
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingMutableLeaves) error:nil];
         NSLog(@"====dict===%@", dict);
-        _dic = @{@"deviceID": deviceId, @"registerID":registrationId, @"result":dict};
+        
+        if (deviceId && registrationId) {
+            _dic = @{@"deviceID": deviceId, @"registerID":registrationId, @"result":dict};
+        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
