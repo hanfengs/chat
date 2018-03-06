@@ -184,13 +184,34 @@
 //    [self.webView stringByEvaluatingJavaScriptFromString:textJS];
 //}
 
-#pragma mark- 原生POST
+#pragma mark- 原生GET
 /*
  注册设备：/push/device/init
  参数：userId=123&deviceId=123&pushRegistrationId=123&type=2&isProduction=true
  注：typeExtra，0:学生；1：资助人；2：chat，默认为2
  isProduction，true：生产环境，false：开发环境，默认为false
  type，isProduction是非必填
+ 
+ ************************
+ 1001 四位的现在定义的是客户端请求的问题，相当于HTTP的 4开头的
+ 1001=用户名或密码错误;登陆失败
+ 1002=用户名不存在;登陆失败
+ 1003=请重新登录;请重新登录
+ 1005=没有该用户;消息发送失败
+ 1006=发送内容不能为空;消息发送失败
+ 1007=缺少必要参数;消息发送失败
+ 
+ ************************
+ 10001 五位的是系统服务器这面的错误，相当于HTTP的 5开头的
+ 10001, "system exception"
+ 10002, "error_code not found"
+ 30000, "Interface does not exist/Request is not supported by the HTTP METHOD"
+ 30001, "Parameters calibration failure"
+ 30002, "No permission to access, signature verification failed"
+ 30003, "The HTTP request head parameters cannot be empty"
+ 3 开头的是系统默认对客户端的提示 也是相当于http4开头的
+ sysMessage 这个是代码级别的提示错误给开发者看的，  clientMessage是给使用用户看的
+ 
  */
 - (void)postUserId:(NSString *)userId withAlias:(NSString *)alias{
     
