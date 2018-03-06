@@ -117,7 +117,8 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
 //    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-    [application setApplicationIconBadgeNumber:0];
+    [application setApplicationIconBadgeNumber:0];    
+    [JPUSHService setBadge:0];
 }
 
 
@@ -125,6 +126,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     
     [application setApplicationIconBadgeNumber:0];
+    [JPUSHService setBadge:0];
 }
 
 

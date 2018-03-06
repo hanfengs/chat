@@ -185,13 +185,20 @@
 //}
 
 #pragma mark- 原生POST
+/*
+ 注册设备：/push/device/init
+ 参数：userId=123&deviceId=123&pushRegistrationId=123&type=2&isProduction=true
+ 注：typeExtra，0:学生；1：资助人；2：chat，默认为2
+ isProduction，true：生产环境，false：开发环境，默认为false
+ type，isProduction是非必填
+ */
 - (void)postUserId:(NSString *)userId withAlias:(NSString *)alias{
     
     NSString *deviceId = ApplicationDelegate.deviceToken;
     NSString *registrationId = [JPUSHService registrationID];
     
     NSString *urlstr = @"http://101.132.152.101/get-api/push/device/init?";
-    NSString *args = [NSString stringWithFormat:@"userId=%@&deviceId=%@&pushRegistrationId=%@&alias=%@",userId, deviceId, registrationId, alias];
+    NSString *args = [NSString stringWithFormat:@"userId=%@&deviceId=%@&pushRegistrationId=%@&alias=%@&typeExtra=2&isProduction=true",userId, deviceId, registrationId, alias];
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", urlstr, args]];
     
