@@ -36,10 +36,10 @@
     /*
      http://47.95.38.15/gm/login.html
      http://47.95.38.15/gm/login.html
-     
+     http://101.132.152.101/gm/login.html
      http://maxen.quxueabc.com
      */
-    NSURL *url = [NSURL URLWithString:@"http://47.95.38.15/gm/login.html"];
+    NSURL *url = [NSURL URLWithString:@"http://101.132.152.101/gm/login.html"];
     
     //加载请求的时候忽略缓存
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30.0];
